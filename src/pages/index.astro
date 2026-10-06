@@ -1,0 +1,22 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const result = await fetch('https://calendarapi.blackbullsvolley.it/pgs',
+    {
+        method: "POST",
+        headers: {
+            "content-type": "application/json"
+        },
+        body: JSON.stringify({
+            category: "Under 15 Maschile",
+            team: "BLACK BULLS VOL. COLOGNO"
+        })
+    });
+
+const data = await result.json();
+console.log(data);
+---
+
+<Layout>
+  <pre>{JSON.stringify(data, null, 2)}</pre>
+</Layout>

@@ -1,0 +1,11 @@
+@import "tailwindcss";
+
+@theme {
+    --bg: rgb(21 21 21 / 0.8);
+    --bg-black: rgb(10 10 10 / 0.8);
+    --sky-blue: rgb(2 184 255 / 0.8);
+}
+
+:root {
+    background-color: var(--bg-black);
+}
