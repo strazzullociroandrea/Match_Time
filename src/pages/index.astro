@@ -1,5 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import Navbar from '../components/Navbar.astro';
+import Hero from '../components/Hero.astro';
 
 const result = await fetch('https://calendarapi.blackbullsvolley.it/pgs',
     {
@@ -13,10 +15,18 @@ const result = await fetch('https://calendarapi.blackbullsvolley.it/pgs',
         })
     });
 
+
+if (!result.ok) {
+    throw new Error(`HTTP error! status: ${result.status}`);
+}
 const data = await result.json();
-console.log(data);
+const matches = Array.isArray(data?.matches) ? data.matches : [];
+const firstMatchNear = matches.find(match => match.status === "In programma") || null;
+
+const lastUpdate = data?.lastUpdate || null;
 ---
 
 <Layout>
-  <pre>{JSON.stringify(data, null, 2)}</pre>
+    <Navbar match={firstMatchNear}/>
+    <Hero match={firstMatchNear}/>
 </Layout>
