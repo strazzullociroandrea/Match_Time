@@ -1,0 +1,85 @@
+---
+import {Card} from "@/components/ui/card";
+import {Badge} from "@/components/ui/badge";
+import {MapPin, ChevronRight} from "lucide-react";
+import {getNavigationLink} from "@/lib/get-navigation-link.ts";
+import type {MatchSchema} from "@/types/match-schema.ts";
+
+interface Props {
+    match: MatchSchema | null;
+}
+
+const {match} = Astro.props;
+---
+
+{
+    !match ? (
+    <div class="text-center text-sm text-muted-foreground p-4">
+        Nessuna partita disponibile
+    </div>
+        ) : (
+    <Card
+            key={`${match.id}-calendar`}
+            className="cursor-pointer group relative flex flex-col lg:flex-row items-stretch gap-4 rounded-2xl border bg-card p-4 transition-all hover:shadow-md hover:border-primary/30 w-full"
+    >
+        <div class="flex flex-row lg:flex-col items-center justify-between lg:justify-center lg:border-r lg:pr-6 lg:min-w-32 border-b lg:border-b-0 pb-3 lg:pb-0 gap-2 shrink-0">
+            <div class="flex flex-col items-start lg:items-center text-left lg:text-center">
+                    <span class="text-2xl font-black text-primary leading-none">
+                        {match.hour ?? "--:--"}
+                    </span>
+                <span class="text-[10px] text-red-700 uppercase font-bold tracking-widest mt-1">
+                        {match.date ?? "Non disponibile"}
+                    </span>
+            </div>
+        </div>
+
+        <div class="flex-1 min-w-0 flex flex-col gap-3">
+            <div class="flex flex-col gap-1">
+                <div class="flex justify-start mt-2 mb-2">
+                    <Badge variant="outline"
+                           className="text-[9px] py-0 px-1.5 font-bold bg-primary/0.5 border-primary/20 text-primary w-fit">
+                        {match.category}
+                    </Badge>
+                </div>
+
+                <div class="text-center flex flex-row items-center gap-3 overflow-hidden w-full justify-center">
+                        <span class="text-base font-black truncate text-right">
+                            {match.home}
+                        </span>
+
+                    <span class="text-[10px] font-black bg-primary/10 text-primary px-1.5 py-0.5 rounded italic shrink-0">
+                            VS
+                        </span>
+
+                    <span class="text-base font-black truncate text-left">
+                            {match.guest}
+                        </span>
+                </div>
+            </div>
+
+            <div class="flex items-start gap-2 text-muted-foreground/80">
+                <MapPin className="w-4 h-4 mt-0.5 text-primary/60 shrink-0"/>
+                <span class="text-xs font-medium leading-relaxed">
+                        {match.place ?? "Indirizzo non disponibile"}
+                    </span>
+            </div>
+        </div>
+
+        <div class="flex items-center justify-center lg:pl-4">
+            <a
+                    href={!match.place ? undefined : getNavigationLink(match.place)}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class={`w-full lg:w-auto flex items-center justify-center gap-2 p-3 lg:p-2.5 rounded-xl transition-all ${
+                        match.place
+                            ? "bg-primary/5 text-primary hover:bg-primary hover:text-primary-foreground"
+                            : "bg-secondary/50 text-muted-foreground cursor-not-allowed opacity-50"
+                    }`}
+            >
+                <span class="text-xs font-bold lg:hidden">Apri Navigatore</span>
+                <ChevronRight className="w-5 h-5 lg:w-4 lg:h-4"/>
+            </a>
+        </div>
+    </Card>
+        )
+    }

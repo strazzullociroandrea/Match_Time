@@ -2,6 +2,8 @@
 import Layout from '../layouts/Layout.astro';
 import Navbar from '../components/Navbar.astro';
 import Hero from '../components/Hero.astro';
+import Match from '../components/Match.astro';
+import type {MatchSchema} from "@/types/match-schema.ts";
 
 const result = await fetch('https://calendarapi.blackbullsvolley.it/pgs',
     {
@@ -20,7 +22,7 @@ if (!result.ok) {
     throw new Error(`HTTP error! status: ${result.status}`);
 }
 const data = await result.json();
-const matches = Array.isArray(data?.matches) ? data.matches : [];
+const matches: MatchSchema[] = Array.isArray(data?.matches) ? data.matches : [];
 const firstMatchNear = matches.find(match => match.status === "In programma") || null;
 
 const lastUpdate = data?.lastUpdate || null;
@@ -29,4 +31,8 @@ const lastUpdate = data?.lastUpdate || null;
 <Layout>
     <Navbar match={firstMatchNear}/>
     <Hero match={firstMatchNear}/>
+    <div class="container mx-auto  -mt-25 p-5">
+        <Match match={firstMatchNear}/>
+    </div>
+
 </Layout>
