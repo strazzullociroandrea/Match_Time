@@ -9,5 +9,5 @@ export interface MatchSchema {
     guest: string,
     place: string,
     isHome: boolean,
-    status: string
+    status: "In programma" | "Prossima" | "Disputata" | "Non definita"
 }

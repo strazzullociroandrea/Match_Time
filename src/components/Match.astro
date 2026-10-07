@@ -5,6 +5,13 @@ import {MapPin, ChevronRight} from "lucide-react";
 import {getNavigationLink} from "@/lib/get-navigation-link.ts";
 import type {MatchSchema} from "@/types/match-schema.ts";
 
+const statusColors: Record<string, string> = {
+    "In programma": "bg-blue-500/10 text-blue-600 border-blue-500/20",
+    "Prossima": "bg-amber-500/10 text-amber-600 border-amber-500/20",
+    "Disputata": "bg-emerald-500/10 text-emerald-600 border-emerald-500/20",
+    "Non definita": "bg-muted text-muted-foreground border-border",
+};
+
 interface Props {
     match: MatchSchema | null;
 }
@@ -20,7 +27,7 @@ const {match} = Astro.props;
         ) : (
     <Card
             key={`${match.id}-calendar`}
-            className="cursor-pointer group relative flex flex-col lg:flex-row items-stretch gap-4 rounded-2xl border bg-card p-4 transition-all hover:shadow-md hover:border-primary/30 w-full"
+            className="cursor-pointer group relative flex flex-col lg:flex-row items-stretch gap-4 rounded-2xl bg-card p-4 transition-all hover:shadow-md hover:border-primary/30 w-full"
     >
         <div class="flex flex-row lg:flex-col items-center justify-between lg:justify-center lg:border-r lg:pr-6 lg:min-w-32 border-b lg:border-b-0 pb-3 lg:pb-0 gap-2 shrink-0">
             <div class="flex flex-col items-start lg:items-center text-left lg:text-center">
@@ -35,10 +42,12 @@ const {match} = Astro.props;
 
         <div class="flex-1 min-w-0 flex flex-col gap-3">
             <div class="flex flex-col gap-1">
-                <div class="flex justify-start mt-2 mb-2">
-                    <Badge variant="outline"
-                           className="text-[9px] py-0 px-1.5 font-bold bg-primary/0.5 border-primary/20 text-primary w-fit">
-                        {match.category}
+                <div class="flex justify-start">
+                    <Badge
+                            variant="outline"
+                            className={`text-[10px] py-0.5 px-2 font-bold rounded-md border ${statusColors[match.status] || statusColors["Non definita"]}`}
+                    >
+                        {match.status}
                     </Badge>
                 </div>
 
@@ -76,7 +85,7 @@ const {match} = Astro.props;
                             : "bg-secondary/50 text-muted-foreground cursor-not-allowed opacity-50"
                     }`}
             >
-                <span class="text-xs font-bold lg:hidden">Apri Navigatore</span>
+                <span class="text-xs font-bold">Apri Navigatore</span>
                 <ChevronRight className="w-5 h-5 lg:w-4 lg:h-4"/>
             </a>
         </div>
