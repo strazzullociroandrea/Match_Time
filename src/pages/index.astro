@@ -4,7 +4,7 @@ import Navbar from '../components/Navbar.astro';
 import Hero from '../components/Hero.astro';
 import Match from '../components/Match.astro';
 import type {MatchSchema} from "@/types/match-schema.ts";
-import {CalendarDays} from "lucide-react";
+import {CalendarDays, Clock, Code2, Info} from "lucide-react";
 
 let matches: MatchSchema[] = [];
 let firstMatchNear: MatchSchema | null = null;
@@ -102,4 +102,48 @@ try {
                 </div>
             </>
     )}
+
+    <footer class="border-t border-border/60 bg-card/30 mt-20 pt-10 pb-8">
+        <div class="container mx-auto px-5 flex flex-col gap-6 text-xs text-muted-foreground">
+
+            <div class="flex items-start gap-3 p-4 rounded-xl bg-muted/40 border border-border/60 max-w-5xl mx-auto">
+                <Info className="w-4 h-4 text-primary shrink-0 mt-0.5"/>
+                <p class="leading-relaxed text-left">
+                    Progetto indipendente. Tutti i dati visualizzati sono di proprietà del comitato
+                    <span class="font-semibold text-foreground"> PGS Milano</span> e sono resi disponibili al pubblico
+                    dagli stessi tramite il loro sito web.
+                    L'applicazione si limita a facilitarne la consultazione. L'autore non è responsabile di eventuali
+                    inesattezze o discrepanze nei dati mostrati.
+                </p>
+            </div>
+
+            <div class="flex flex-col sm:flex-row items-center justify-between gap-4 pt-4  text-center sm:text-left">
+                <div class="flex items-center gap-1.5 font-medium">
+                    <Clock className="w-3.5 h-3.5 text-primary"/>
+                    <span>Ultimo aggiornamento: <span
+                            class="font-semibold text-foreground">{new Date().toLocaleString('it-IT', {
+                        dateStyle: 'short',
+                        timeStyle: 'short'
+                    })}</span></span>
+                </div>
+
+                <div class="flex items-center gap-1.5 font-medium">
+                    <Code2 className="w-3.5 h-3.5 text-primary"/>
+                    <span>
+                        Sviluppato da{' '}
+                        <a
+                                href="https://cirostrazzullo.it"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                class="font-bold text-foreground hover:text-primary transition-colors underline underline-offset-4 decoration-primary/30 hover:decoration-primary"
+                        >
+                            Ciro A. Strazzullo
+                        </a>
+                    </span>
+                </div>
+            </div>
+
+        </div>
+    </footer>
+
 </Layout>
