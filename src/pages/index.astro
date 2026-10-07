@@ -1,8 +1,18 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import Navbar from '../components/Navbar.astro';
+import Hero from '../components/Hero.astro';
+import Match from '../components/Match.astro';
+import type {MatchSchema} from "@/types/match-schema.ts";
+import {CalendarDays} from "lucide-react";
 
-const result = await fetch('https://calendarapi.blackbullsvolley.it/pgs',
-    {
+let matches: MatchSchema[] = [];
+let firstMatchNear: MatchSchema | null = null;
+let error: string | null = null;
+let dividedPerMonth: Record<string, MatchSchema[]> = {};
+
+try {
+    const result = await fetch('https://calendarapi.blackbullsvolley.it/pgs', {
         method: "POST",
         headers: {
             "content-type": "application/json"
@@ -13,10 +23,83 @@ const result = await fetch('https://calendarapi.blackbullsvolley.it/pgs',
         })
     });
 
-const data = await result.json();
-console.log(data);
+    if (!result.ok) {
+        throw new Error(`HTTP error! status: ${result.status}`);
+    }
+
+    const data = await result.json();
+    matches = Array.isArray(data?.matches) ? data.matches : [];
+
+    firstMatchNear = matches.find(match => match.status === "In programma" || match.status === "Prossima") || matches[0] || null;
+
+    matches.forEach((match: MatchSchema) => {
+        const [dd, mm, yyyy] = match.date.split('/');
+        const date = new Date(Number(yyyy), Number(mm) - 1, 1);
+        const matchDate = new Date(date);
+        let month = matchDate.toLocaleString('it-IT', {month: 'long', year: 'numeric'});
+
+
+        if (!dividedPerMonth[month]) {
+            dividedPerMonth[month] = [];
+        }
+        dividedPerMonth[month].push(match);
+    });
+
+} catch (e: any) {
+    console.error("Errore nel recupero delle partite:", e);
+    error = "Impossibile caricare il calendario al momento.";
+}
 ---
 
 <Layout>
-  <pre>{JSON.stringify(data, null, 2)}</pre>
+    <Navbar match={firstMatchNear}/>
+    <Hero match={firstMatchNear}/>
+
+    {error ? (
+            <div class="container mx-auto p-5 text-center text-red-500 font-medium">
+                {error}
+            </div>
+    ) : (
+            <>
+                {firstMatchNear && (
+                        <div class="container mx-auto -mt-24 p-5 relative z-10">
+                            <Match match={firstMatchNear}/>
+                        </div>
+                )}
+
+                <div class="container mx-auto p-5 mt-8 mb-12">
+                    <div class="flex items-center justify-between mb-8 border-b border-border/60 pb-4">
+                        <h1 class="text-3xl font-black tracking-tight text-foreground">Calendario Partite</h1>
+                        <span class="text-xs font-bold text-muted-foreground bg-muted px-3 py-1.5 rounded-full">
+                        {matches.length} {matches.length === 1 ? 'Partita' : 'Partite'} totali
+                    </span>
+                    </div>
+
+                    {matches.length === 0 ? (
+                            <div class="text-center py-12 rounded-2xl border border-dashed border-border p-6 bg-card/50">
+                                <p class="text-sm text-muted-foreground">Nessuna partita in calendario.</p>
+                            </div>
+                    ) : (
+                            <div class="space-y-10">
+                                {Object.keys(dividedPerMonth).map(month => (
+                                        <div id={month} class="space-y-4">
+                                            <div class="flex items-center gap-3">
+                                                <div class="flex items-center gap-2 px-3.5 py-1.5 bg-primary/10 border border-primary/20 rounded-xl text-primary font-black text-xs uppercase tracking-widest shadow-xs">
+                                                    <CalendarDays className="w-4 h-4"/>
+                                                    {month}
+                                                </div>
+                                            </div>
+
+                                            <div class="space-y-3.5">
+                                                {dividedPerMonth[month].map(match => (
+                                                        <Match match={match}/>
+                                                ))}
+                                            </div>
+                                        </div>
+                                ))}
+                            </div>
+                    )}
+                </div>
+            </>
+    )}
 </Layout>
