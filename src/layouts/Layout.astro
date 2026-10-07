@@ -1,5 +1,6 @@
 ---
 import '../styles/global.css'
+import {GoToUp} from "@/components/go-to-up.tsx";
 ---
 
 <!doctype html>
@@ -9,11 +10,15 @@ import '../styles/global.css'
     <meta name="viewport" content="width=device-width"/>
     <link rel="icon" type="image/png" href="/logo.png"/>
     <link rel="icon" type="image/png" href="/logo.png"/>
-    <meta name="generator" content={Astro.generator}/>
+    <meta name="description"
+          content="Match Time è un'applicazione indipendente che mostra l'elenco delle partite di pallavolo del comitato PGS Milano in modo organizzato."/>
+
     <title>Calendario Partite | MatchTime </title>
+
 </head>
 <body>
 <slot/>
+<GoToUp client:load/>
 </body>
 </html>
 
