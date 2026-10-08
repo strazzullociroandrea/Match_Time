@@ -22,6 +22,8 @@ let firstMatchNear: MatchSchema | null = null;
 let error: string | null = null;
 let dividedPerMonth: Record<string, MatchSchema[]> = {};
 let undefinedMatchesCount: number = 0;
+let lastUpdate: string = "";
+
 try {
     const result = await fetch(apiUrl, {
         method: "POST",
@@ -57,7 +59,8 @@ try {
         dividedPerMonth[month].push(match);
     });
 
-    undefinedMatchesCount = matches.filter(match => match.status === "Non definita" || match.status === "Prossima").length;
+    undefinedMatchesCount = matches.filter(match => match.status === "Non definita").length;
+    lastUpdate = data.lastUpdate;
 
 } catch (e) {
     error = "Impossibile caricare il calendario al momento. Codice errore 00G2";
@@ -231,10 +234,7 @@ try {
                 <div class="flex items-center gap-1.5 font-medium">
                     <Clock className="w-3.5 h-3.5 text-primary"/>
                     <span>Ultimo aggiornamento partite: <span
-                            class="font-semibold text-foreground">{new Date().toLocaleString('it-IT', {
-                        dateStyle: 'short',
-                        timeStyle: 'short'
-                    })}</span></span>
+                            class="font-semibold text-foreground"> {lastUpdate}</span></span>
                 </div>
 
                 <div class="flex items-center gap-1.5 font-medium">
