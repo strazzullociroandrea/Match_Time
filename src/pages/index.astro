@@ -59,7 +59,7 @@ try {
         dividedPerMonth[month].push(match);
     });
 
-    undefinedMatchesCount = matches.filter(match => match.status === "Non definita" || match.status === "Prossima").length;
+    undefinedMatchesCount = matches.filter(match => match.status === "Non definita").length;
     lastUpdate = data.lastUpdate;
 
 } catch (e) {
