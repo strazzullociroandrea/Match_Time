@@ -25,7 +25,12 @@ export function GoToUp() {
     return (
         <div className={`fixed bottom-10 right-7 z-50 ${isVisible ? 'block' : 'hidden'}`}>
             <button
-                onClick={() => window.scrollTo({top: 0, behavior: 'smooth'})}
+                onClick={() => {
+                    window.history.pushState("", document.title, window.location.pathname + window.location.search);
+                    window.scrollTo({
+                        top: 0, behavior: 'smooth'
+                    })
+                }}
                 aria-label="Torna a inizio pagina"
                 className="text-white bg-red-500 cursor-pointer flex h-11 w-11 items-center justify-center rounded-xl bg-brand-blue/90 hover:bg-brand-blue  shadow-lg transition-all duration-300 hover:-translate-y-1 active:scale-95"
             >
