@@ -19,7 +19,10 @@ export const PageManager = () => {
         try {
             const response = await fetch("/api/matches", {
                 cache: "no-store",
-                headers: {Accept: "application/json"},
+                headers: {
+                    Accept: "application/json",
+                    "Cache-Control": "no-cache, no-store",
+                },
             });
 
             if (!response.ok) {

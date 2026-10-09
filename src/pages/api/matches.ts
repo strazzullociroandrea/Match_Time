@@ -1,7 +1,7 @@
 import type {APIRoute} from "astro";
 
 export const runtime = "edge";
-export const dynamic = 'force-dynamic';
+export const prerender = false;
 
 export const GET: APIRoute = async () => {
     const url = import.meta.env.PUBLIC_URL_API;
@@ -24,6 +24,7 @@ export const GET: APIRoute = async () => {
             method: "POST",
             headers: {
                 "content-type": "application/json",
+                "cache-control": "no-cache, no-store",
             },
             body: JSON.stringify({category, team}),
         });
