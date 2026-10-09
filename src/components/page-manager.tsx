@@ -30,6 +30,7 @@ export const PageManager = () => {
             }
 
             const data = await response.json();
+            console.log(data);
             setMatches(data.matches || []);
             setLastUpdate(data.lastUpdate);
             setError(null);

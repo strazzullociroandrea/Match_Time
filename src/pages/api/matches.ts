@@ -38,6 +38,7 @@ export const GET: APIRoute = async () => {
             headers: {
                 "Content-Type": "application/json",
                 "Cache-Control": "no-store, no-cache, must-revalidate",
+                "CDN-Cache-Control": "no-store",
             },
         });
     } catch (error) {
