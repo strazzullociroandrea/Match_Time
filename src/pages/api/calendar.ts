@@ -1,6 +1,6 @@
 import type {APIRoute} from 'astro';
 import * as ics from "ics";
-import type {MatchSchema} from "../../types/match-schema";
+import type {MatchSchema} from "@/types/match-schema.ts";
 
 export const runtime = "edge";
 

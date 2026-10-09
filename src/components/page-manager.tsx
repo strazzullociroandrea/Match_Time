@@ -28,7 +28,7 @@ export const PageManager = () => {
 
             const data = await response.json();
             setMatches(data.matches || []);
-            setLastUpdate(data.lastUpdate || new Date().toLocaleTimeString());
+            setLastUpdate(data.lastUpdate);
             setError(null);
         } catch (err: any) {
             console.error("[ERROR-REFRESH] Unable to fetch matches:", err);
@@ -48,14 +48,16 @@ export const PageManager = () => {
     if (loading) {
         return (
             <div className="min-h-screen bg-background flex flex-col">
-                <Navbar />
-                <Hero />
+                <Navbar/>
+                <Hero/>
                 <main className="container mx-auto -mt-24 p-5 relative z-10 flex justify-center">
                     <div className="w-full max-w-2xl">
-                        <div className="group relative flex items-center gap-4 rounded-2xl bg-card p-6 border border-border/80 shadow-sm animate-pulse w-full">
+                        <div
+                            className="group relative flex items-center gap-4 rounded-2xl bg-card p-6 border border-border/80 shadow-sm animate-pulse w-full">
 
-                            <div className="w-12 h-12 rounded-2xl bg-primary/10 text-primary flex items-center justify-center shrink-0 border border-primary/20">
-                                <Spinner className="w-6 h-6 animate-spin" />
+                            <div
+                                className="w-12 h-12 rounded-2xl bg-primary/10 text-primary flex items-center justify-center shrink-0 border border-primary/20">
+                                <Spinner className="w-6 h-6 animate-spin"/>
                             </div>
 
                             <div className="flex-1 min-w-0 flex flex-col gap-1 text-left">
@@ -153,7 +155,8 @@ export const PageManager = () => {
                         <div
                             className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 mb-8 border-b border-border/60 pb-4">
                             <div className="flex items-center justify-between">
-                                <h1 className="text-3xl font-black tracking-tight text-foreground">Calendario Partite</h1>
+                                <h1 className="text-3xl font-black tracking-tight text-foreground">Calendario
+                                    Partite</h1>
 
                                 <div className="flex items-center gap-2 lg:hidden">
                                     {undefinedMatchesCount > 0 && (
