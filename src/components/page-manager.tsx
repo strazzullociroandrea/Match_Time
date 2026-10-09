@@ -266,7 +266,7 @@ export const PageManager = () => {
                                 <div className="flex items-center gap-1.5 font-medium">
                                     <Code2 className="w-3.5 h-3.5 text-primary"/>
                                     <span>
-                        Sviluppato da <a
+                        Developed by <a
                                         href="https://cirostrazzullo.it"
                                         target="_blank"
                                         rel="noopener noreferrer"
