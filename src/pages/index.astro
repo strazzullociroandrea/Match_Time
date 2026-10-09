@@ -1,4 +1,9 @@
 ---
+Astro.response.headers.set(
+    'Cache-Control',
+    'public, max-age=0, s-maxage=600, stale-while-revalidate=60'
+);
+
 import Layout from '../layouts/Layout.astro';
 import Navbar from '../components/Navbar.astro';
 import Hero from '../components/Hero.astro';
@@ -254,5 +259,9 @@ try {
 
         </div>
     </footer>
+
+    <script>
+
+    </script>
 
 </Layout>
