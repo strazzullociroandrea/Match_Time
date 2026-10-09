@@ -23,6 +23,9 @@ export const PageManager = () => {
                     Accept: "application/json",
                     "Cache-Control": "no-cache, no-store",
                 },
+                cf: {
+                    cacheEverything: false,
+                },
             });
 
             if (!response.ok) {

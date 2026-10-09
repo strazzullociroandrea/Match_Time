@@ -27,7 +27,10 @@ export const GET: APIRoute = async () => {
                 "cache-control": "no-cache, no-store",
             },
             body: JSON.stringify({category, team}),
-        });
+            cf: {
+                cacheEverything: false,
+            },
+        } as RequestInit & { cf?: any });
 
         if (!response.ok) {
             throw new Error(`Upstream API returned HTTP ${response.status}`);
