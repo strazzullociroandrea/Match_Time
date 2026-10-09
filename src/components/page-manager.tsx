@@ -17,16 +17,19 @@ export const PageManager = () => {
 
     const fetchMatches = async () => {
         try {
-            const response = await fetch("/api/matches", {
-                cache: "no-store",
-                headers: {
-                    Accept: "application/json",
-                    "Cache-Control": "no-cache, no-store",
-                },
-                cf: {
-                    cacheEverything: false,
-                },
-            });
+            const url = import.meta.env.PUBLIC_URL_API;
+            const category = import.meta.env.PUBLIC_CATEGORY;
+            const team = import.meta.env.PUBLIC_TEAM;
+
+            const response = await fetch(url, {
+                    method: "POST",
+                    cache: "no-store",
+                    headers: {
+                        "content-type": "application/json",
+                    },
+                    body: JSON.stringify({category, team}),
+                })
+            ;
 
             if (!response.ok) {
                 throw new Error(`Matches API returned HTTP ${response.status}`);
