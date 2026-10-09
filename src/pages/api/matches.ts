@@ -1,6 +1,7 @@
 import type {APIRoute} from "astro";
 
 export const runtime = "edge";
+export const dynamic = 'force-dynamic';
 
 export const GET: APIRoute = async () => {
     const url = import.meta.env.PUBLIC_URL_API;
