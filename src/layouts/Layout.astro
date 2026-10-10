@@ -4,25 +4,32 @@ import {GoToUp} from "@/components/go-to-up.tsx";
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang="it">
 <head>
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width"/>
-    <link rel="icon" type="image/png" href="/logo.png"/>
-    <link rel="icon" type="image/png" href="/logo.png"/>
+    <link rel="manifest" href="/manifest.webmanifest"/>
     <meta name="description"
           content="Match Time è un'applicazione indipendente che mostra l'elenco delle partite di pallavolo del comitato PGS Milano in modo organizzato."/>
 
     <title>Calendario Partite | MatchTime </title>
-    <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel="shortcut icon" href="/favicon.ico" />
-    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
-    <meta name="apple-mobile-web-app-title" content="Match Time" />
- </head>
+    <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96"/>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg"/>
+    <link rel="shortcut icon" href="/favicon.ico"/>
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"/>
+    <meta name="apple-mobile-web-app-title" content="Match Time"/>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@pwabuilder/pwainstall"></script>
+    <script src="/registerSW.js" is:inline></script>
+</head>
 <body>
 <slot/>
 <GoToUp client:load/>
+<pwa-install
+        manifestpath="/manifest.webmanifest"
+        installbuttontext="Installa l'applicazione"
+        explainer="Installa l'app sul tuo dispositivo per usarla comodamente senza aprire il browser.">
+</pwa-install>
+
 </body>
 </html>
 
