@@ -1,6 +1,7 @@
 ---
 import '../styles/global.css'
 import {GoToUp} from "@/components/go-to-up.tsx";
+import {PwaBanner} from "@/components/pwa-banner.tsx";
 ---
 
 <!doctype html>
@@ -24,11 +25,7 @@ import {GoToUp} from "@/components/go-to-up.tsx";
 <body>
 <slot/>
 <GoToUp client:load/>
-<pwa-install
-        manifestpath="/manifest.webmanifest"
-        installbuttontext="Installa l'applicazione"
-        explainer="Installa l'app sul tuo dispositivo per usarla comodamente senza aprire il browser.">
-</pwa-install>
+<PwaBanner client:load/>
 
 </body>
 </html>
